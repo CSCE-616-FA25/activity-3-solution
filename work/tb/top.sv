@@ -1,23 +1,26 @@
 ///////////////////////////////////////////////////////////////////////////
 // Texas A&M University
 // CSCE 616 Hardware Design Verification
-// Created by  : Prof. Quinn and Saumil Gogri
+// File name   : top.sv
 ///////////////////////////////////////////////////////////////////////////
-
 
 `timescale 1ns/1ps
 module top;
 
-	import uvm_pkg::*;
-	`include "uvm_macros.svh"
+  import uvm_pkg::*;
+  `include "uvm_macros.svh"
 
-	`include "htax_defines.sv"
-	`include "htax_packet_c.sv"
-	`include "htax_seqs.sv"
-	`include "htax_tx_driver_c.sv"
-	`include "htax_sequencer_c.sv"
-	`include "test_lib.svh"
-
+  `include "htax_defines.sv"
+  `include "htax_packet_c.sv"
+  `include "htax_seqs.sv"
+  `include "htax_tx_driver_c.sv"
+  `include "htax_sequencer_c.sv"
+  
+  // NEW INCLUDES FOR ACTIVITY 3
+  `include "htax_agent_config.sv"
+  `include "htax_agent_c.sv"
+  
+  `include "test_lib.svh"
 
 initial begin
     `uvm_info("TOP", "Starting test", UVM_NONE)

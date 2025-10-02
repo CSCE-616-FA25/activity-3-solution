@@ -46,15 +46,30 @@ class fix_dest_port_seq extends htax_base_seq;
 
 endclass : fix_dest_port_seq
 
+//CSCE616 Sequence - Sends "CSCE616" message to port 2
+class csce616_seq extends htax_base_seq;
 
-//TO DO - Sequence 2
-//Short Packet Sequence extends from base sequence
+  //Factory Registration
+  `uvm_object_utils(csce616_seq)
 
-//TO DO - Sequence 3
-//Long Packet Short Delay Sequence extends from base sequence
+  //Constructor
+  function new ( string name = "csce616_seq");
+    super.new(name);
+  endfunction : new
 
-//TO DO - Sequence 4
-//Medium Packet fix VC Sequence extends from base sequence
+  //Body task -- sends CSCE616 to port 2
+  virtual task body();
+    
+    `uvm_info(get_type_name(),"Sending CSCE616 packet to port 2!", UVM_NONE)
+    
+    // Send packet with "CSCE616" in data
+    // ASCII: C=43, S=53, C=43, E=45, 6=36, 1=31, 6=36
+    `uvm_do_with(req, {
+      req.dest_port == 2;
+      req.length == 3;
+      req.data[0] == 64'h4353434536313600;  // "CSCE616"
+    })
+    
+  endtask
 
-//TO DO - Sequence 5
-//True Random VC Sequence extends from base sequence
+endclass : csce616_seq

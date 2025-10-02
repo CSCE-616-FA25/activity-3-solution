@@ -29,16 +29,17 @@ class htax_agent_c extends uvm_agent;
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
     
-    // TODO 1: Get configuration from config_db (ALREADY COMPLETED AS EXAMPLE)
+    // TODO 1: Get configuration from config_db
     if(!uvm_config_db#(htax_agent_config)::get(this, "", "cfg", cfg))
       `uvm_fatal(get_type_name(), "Failed to get agent configuration")
     
     // Only create sequencer and driver if agent is ACTIVE
     if(cfg.is_active == UVM_ACTIVE) begin
       // TODO 2: Create sequencer using factory
+      sequencer = htax_sequencer_c::type_id::create("sequencer", this);
       
       // TODO 3: Create driver using factory
-      
+      driver = htax_tx_driver_c::type_id::create("driver", this);
     end
     
     `uvm_info(get_type_name(), $sformatf("Agent in %s mode", 
@@ -52,7 +53,7 @@ class htax_agent_c extends uvm_agent;
     // Only connect if agent is ACTIVE
     if(cfg.is_active == UVM_ACTIVE) begin
       // TODO 4: Connect driver's seq_item_port to sequencer's seq_item_export
-      
+      driver.seq_item_port.connect(sequencer.seq_item_export);
     end
   endfunction : connect_phase
   
